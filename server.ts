@@ -22,7 +22,15 @@ wss.on('connection', (ws: WebSocket) => {
         const file_data = JSON.parse(data)
         switch (file_data.type) {
             case ("big_data"): {
-                save_file(file_data.data)
+                let time = Date.now();
+                save_file(file_data.data);
+                time = Date.now() - time;
+                console.log("file saved in %d", time)
+                break;
+            }
+            case ("get_data"): {
+
+                break;
             }
         }
     }); 
@@ -48,6 +56,5 @@ async function save_file(file_data: string) {
     // const json_data = JSON.parse(file_data);
     const raw_data = Buffer.from(file_data, "base64");
     await Bun.write("alternative_data", raw_data, );
-    console.log("file saved")
 }
 
