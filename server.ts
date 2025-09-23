@@ -25,7 +25,7 @@ wss.on('connection', (ws: WebSocket) => {
                 let time = Date.now();
                 save_file(file_data.data);
                 time = Date.now() - time;
-                console.log("file saved in %d", time)
+                console.log("file saved in %f", time)
                 break;
             }
             case ("get_data"): {
