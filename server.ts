@@ -24,8 +24,7 @@ wss.on('connection', (ws: WebSocket) => {
             case ("big_data"): {
                 let time = performance.now();
                 save_file(file_data.data);
-                time = performance.now() - time;
-                console.log("file saved in %f", time)
+                console.log("file saved in %f", (performance.now() - time).toFixed(3))
                 break;
             }
             case ("get_data"): {
