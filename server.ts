@@ -22,9 +22,9 @@ wss.on('connection', (ws: WebSocket) => {
         const file_data = JSON.parse(data)
         switch (file_data.type) {
             case ("big_data"): {
-                let time = Date.now();
+                let time = performance.now();
                 save_file(file_data.data);
-                time = Date.now() - time;
+                time = performance.now() - time;
                 console.log("file saved in %f", time)
                 break;
             }
