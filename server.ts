@@ -2,6 +2,7 @@
 import { WebSocketServer } from "ws";
 import WebSocket from 'ws';
 
+
 // Create a WebSocket server on port 8080
 const wss = new WebSocketServer({ port: 8080 });
 
@@ -15,20 +16,17 @@ wss.on('connection', (ws: WebSocket) => {
     ws.send('Welcome to the WebSocket server!');
 
     // Message event handler
-    ws.on('message', (message: WebSocket.Data, isBinary: boolean) => {
-        // Normalize message to string for logging/echoing
-        if (isBinary) {
-            console.log("Recieved a binary file")
-        } else
-        {
-            const text = typeof message === 'string' ? message : message.toString();
-            console.log(`Received: ${text}`);
+
+
+    ws.on("message", (data: string) => {
+        const file_data = JSON.parse(data)
+        switch (file_data.type) {
+            case ("big_data"): {
+                save_file(file_data.data)
+            }
         }
+    }); 
 
-
-        // Echo the message back to the client
-        ws.send('Server received something');
-    });
 
     // Close event handler
     ws.on('close', (code: number, reason: Buffer) => {
@@ -40,3 +38,16 @@ wss.on('connection', (ws: WebSocket) => {
         console.error('WebSocket error:', err);
     });
 });
+
+
+async function save_file(file_data: string) {
+    let file_test = Bun.file("alternative_data");
+    if (await file_test.exists()) {
+        await file_test.delete();
+    };
+    // const json_data = JSON.parse(file_data);
+    const raw_data = Buffer.from(file_data, "base64");
+    await Bun.write("alternative_data", raw_data, );
+    console.log("file saved")
+}
+
