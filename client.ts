@@ -3,7 +3,7 @@ import { DataGetter } from "./GetData.ts";
 
 // Create a WebSocket server on port 8080
 const wss = new WebSocket("ws://206.167.46.66:8080");
-const the_file = new DataGetter("hello.txt");
+const the_file = new DataGetter("minimally_compressible_file.bin");
 const file_data = await the_file.base64();
 const user_in = await get_user_input();
 
