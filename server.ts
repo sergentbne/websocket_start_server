@@ -25,7 +25,7 @@ async function get_data_of_file() {
 
   let file_exists = await file_test.exists();
   if (file_exists) {
-    data = await file_test.bytes();
+    data = (await file_test.bytes()).toBase64();
     return data;
   } else {
     return "No Data";
