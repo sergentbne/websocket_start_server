@@ -32,6 +32,6 @@ wss.on("message", (message: WebSocket.Data) => {
 });
 
 async function get_user_input() {
-    const user_in = prompt("what do you want to do: \n(1): send a big file (test)\n(2) get the data")
+    const user_in = prompt("what do you want to do: \n(1): send a big file (test)\n(2): get the data")
     return user_in
 }

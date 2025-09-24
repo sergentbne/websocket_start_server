@@ -23,7 +23,6 @@ wss.on('connection', (ws: WebSocket) => {
         switch (file_data.type) {
             case ("big_data"): {
                 save_file(file_data.data);
-                console.log("file saved in %f", (performance.now() - time).toFixed(3))
                 break;
             }
             case ("get_data"): {
@@ -53,6 +52,8 @@ wss.on('connection', (ws: WebSocket) => {
 
 
 async function save_file(file_data: string) {
+    let time = performance.now();
+
     let file_test = Bun.file("alternative_data");
     if (await file_test.exists()) {
         await file_test.delete();
@@ -60,6 +61,8 @@ async function save_file(file_data: string) {
     // const json_data = JSON.parse(file_data);
     const raw_data = Buffer.from(file_data, "base64");
     await Bun.write("alternative_data", raw_data);
+    console.log("file saved in %f", (performance.now() - time).toFixed(3))
+
 }
 
 function get_data_of_file() {
