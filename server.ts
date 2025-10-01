@@ -1,6 +1,5 @@
 // server.ts
-import { WebSocketServer } from "ws";
-import WebSocket from "ws";
+import { WebSocketServer, WebSocket } from "ws";
 
 // Create a WebSocket server on port 8080
 
@@ -24,12 +23,11 @@ async function get_data_of_file() {
   let file_test = Bun.file("./alternative_data");
 
   let file_exists = await file_test.exists();
-  if (file_exists) {
-    data = (await file_test.bytes()).toBase64();
-    return data;
-  } else {
+  if (!file_exists) {
     return "No Data";
   }
+  data = (await file_test.bytes()).toBase64();
+  return data;
 }
 
 function main() {
